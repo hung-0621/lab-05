@@ -1,35 +1,48 @@
+// models/Student.js
 const { sequelize, DataTypes } = require('../orm');
 
-const Enrollment = sequelize.define('Enrollment', {
+const Student = sequelize.define('Student', {
   Student_ID: {
     type: DataTypes.STRING(9),
     primaryKey: true
   },
-  Name:{
+  Name: {
     type: DataTypes.STRING(50),
+    allowNull: false
   },
-  Birth_Date:{
+  Birth_Date: {
     type: DataTypes.DATEONLY,
+    allowNull: false
   },
-  Gender:{
-    type:DataTypes.STRING(1),
+  Gender: {
+    type: DataTypes.CHAR(1)
   },
-  Course_ID: {
-    type: DataTypes.STRING(8),
-    primaryKey: true
+  Email: {
+    type: DataTypes.STRING(100),
+    unique: true,
   },
-  Semester: {
-    type: DataTypes.STRING(6),
-    primaryKey: true
+  Phone: {
+    type: DataTypes.STRING(15)
   },
-  Grade: DataTypes.INTEGER,
+  Address: {
+    type: DataTypes.STRING(200)
+  },
+  Admission_Year: {
+    type: DataTypes.INTEGER(11),
+  },
   Status: {
-    type: DataTypes.STRING(20),
-    defaultValue: '正常'
+    type: DataTypes.STRING(10),
+  },
+  Department_ID: {
+    type: DataTypes.STRING(5),
+    references: {
+      model: 'DEPARTMENT',
+      key: 'Department_ID'
+    }
   }
 }, {
-  tableName: 'ENROLLMENT',
-  timestamps: false
+  tableName: 'STUDENT',
+  timestamps: false // 不使用預設的 createdAt 和 updatedAt 欄位
 });
 
-module.exports = Enrollment;
+module.exports = Student;
